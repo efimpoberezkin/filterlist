@@ -136,7 +136,7 @@ public class FilterList<E> extends ArrayList<E> {
             } catch (IndexOutOfBoundsException e) {
                 throw new ConcurrentModificationException();
             } catch (ElementInPredicateException e) {
-                throw new ElementInPredicateException(inPredicateMsg(lastRet));
+                throw e;
             }
         }
 
