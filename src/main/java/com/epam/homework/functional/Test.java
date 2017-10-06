@@ -7,6 +7,13 @@ import java.util.*;
 public class Test {
 
     public static <T1, T2> List<T2> map(List<T1> list, Function<T1, T2> function) {
+        if (list == null) {
+            throw new NullPointerException("Argument list should not be null.");
+        }
+        if (function == null) {
+            throw new NullPointerException("Argument function should not be null.");
+        }
+
         List<T2> mappedList = new ArrayList<T2>(list.size());
         for (T1 elem : list) {
             mappedList.add(function.apply(elem));
@@ -15,6 +22,16 @@ public class Test {
     }
 
     public static <T> T reduce(List<T> list, T initialValue, BinaryOperator<T> operator) {
+        if (list == null) {
+            throw new NullPointerException("Argument list should not be null.");
+        }
+        if (initialValue == null) {
+            throw new NullPointerException("Argument initialValue should not be null.");
+        }
+        if (operator == null) {
+            throw new NullPointerException("Argument operator should not be null.");
+        }
+
         T result = initialValue;
         for (T elem : list) {
             result = operator.apply(result, elem);
