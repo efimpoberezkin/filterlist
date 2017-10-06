@@ -8,7 +8,11 @@ public class FilterList<E> extends ArrayList<E> {
 
     public FilterList(Collection<? extends E> c, HashSet<? extends E> predicate) {
         super(c);
-        this.predicate = new HashSet<E>(predicate);
+        if (predicate != null) {
+            this.predicate = new HashSet<E>(predicate);
+        } else {
+            this.predicate = new HashSet<E>();
+        }
     }
 
     public HashSet<E> getPredicate() {
