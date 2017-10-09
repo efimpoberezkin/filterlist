@@ -6,7 +6,7 @@ public class FilterList<E> extends ArrayList<E> {
 
     private HashSet<E> predicate;
 
-    public FilterList(Collection<? extends E> c, HashSet<? extends E> predicate) {
+    public FilterList(Collection<? extends E> c, Collection<? extends E> predicate) {
         super(c);
         if (predicate != null) {
             this.predicate = new HashSet<E>(predicate);
