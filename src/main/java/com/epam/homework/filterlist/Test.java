@@ -1,6 +1,5 @@
 package com.epam.homework.filterlist;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Test {
