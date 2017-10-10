@@ -20,16 +20,16 @@ public class Test {
     }
 
     private static <E> void testRemovingObject(String desc, Collection<? extends E> collection,
-                                               Collection<? extends E> predicate, Object obj) {
+                                               Collection<? extends E> predicate, E element) {
 
         List<E> list = new FilterList<E>(collection, predicate);
 
         System.out.println("--- " + desc + " ---"
                 + "\nList:        " + Arrays.toString(list.toArray())
                 + "\nPredicate:   " + ((FilterList<E>) list).getPredicate().toString()
-                + "\nTrying to remove object: " + obj.toString()
-                + (((FilterList<E>) list).elementAllowed(obj) ? ", not in the predicate." : ", in the predicate."));
-        boolean check = list.remove(obj);
+                + "\nTrying to remove object: " + element.toString()
+                + (((FilterList<E>) list).elementAllowed(element) ? ", not in the predicate." : ", in the predicate."));
+        boolean check = ((FilterList<E>) list).removeElement(element);
         System.out.println((check ? "Object is removed." : "Object is not removed.")
                 + "\nResult list: " + Arrays.toString(list.toArray()) + "\n");
     }
@@ -142,7 +142,7 @@ public class Test {
         testRemovingObject("Test 12. Testing removal of object, object is not in a predicate.",
                 new ArrayList<Number>(Arrays.asList(new Number[]{5., 1, 9., 2, 5, 7, 4., 9, 6, 4, 3})),
                 new ArrayList<Number>(Arrays.asList(new Number[]{5., 9., 4})),
-                "a");
+                2);
 
         testRemovingAtIndex("Test 13. Testing removal at index, element is in a predicate.",
                 new ArrayList<Number>(Arrays.asList(new Number[]{5., 1, 9., 2, 5, 7, 4., 9, 6, 4, 3})),

@@ -31,9 +31,9 @@ public class FilterList<E> extends ArrayList<E> {
         return elementAllowed(get(index));
     }
 
-    public boolean remove(Object o) {
-        if (elementAllowed(o)) {
-            return super.remove(o);
+    public boolean removeElement(E element) {
+        if (elementAllowed(element)) {
+            return super.remove(element);
         } else {
             return false;
         }
