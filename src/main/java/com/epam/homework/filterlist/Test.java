@@ -1,5 +1,6 @@
 package com.epam.homework.filterlist;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Test {
@@ -63,7 +64,12 @@ public class Test {
                 + "\nPredicate:   " + ((FilterList<E>) list).getPredicate().toString()
                 + "\nTrying to add element: " + element.toString()
                 + (((FilterList<E>) list).elementAllowed(element) ? ", not in the predicate." : ", in the predicate."));
-        boolean check = list.add(element);
+        boolean check = false;
+        try {
+            check = list.add(element);
+        } catch (ElementInPredicateException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println((check ? "Element is added." : "Element is not added.")
                 + "\nResult list: " + Arrays.toString(list.toArray()) + "\n");
     }

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class FilterList<E> extends ArrayList<E> {
 
-    private HashSet<E> predicate;
+    private Collection<E> predicate;
 
     public FilterList(Collection<? extends E> c, Collection<? extends E> predicate) {
         super(c);
@@ -15,7 +15,7 @@ public class FilterList<E> extends ArrayList<E> {
         }
     }
 
-    public HashSet<E> getPredicate() {
+    public Collection<E> getPredicate() {
         return predicate;
     }
 
@@ -50,11 +50,8 @@ public class FilterList<E> extends ArrayList<E> {
     }
 
     public boolean add(E element) {
-        if (elementAllowed(element)) {
-            return super.add(element);
-        } else {
-            return false;
-        }
+        add(size(), element);
+        return true;
     }
 
     public void add(int index, E element) {
@@ -68,7 +65,7 @@ public class FilterList<E> extends ArrayList<E> {
     }
 
     private void rangeCheck(int index) {
-        if (index >= size())
+        if (index < 0 || index >= size())
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
     }
 
@@ -99,7 +96,6 @@ public class FilterList<E> extends ArrayList<E> {
             int i = cursor;
             while (i != size()) {
                 if (elementAllowedAt(i)) {
-                    cursor = i;
                     return true;
                 } else {
                     i++;
@@ -112,14 +108,17 @@ public class FilterList<E> extends ArrayList<E> {
             checkForComodification();
             try {
                 int i = cursor;
-                E next = get(i);
-                if (elementAllowedAt(i)) {
-                    lastRet = i;
-                    cursor = i + 1;
-                    return next;
-                } else {
-                    throw new ElementInPredicateException(inPredicateMsg(i));
+                while (i != size()) {
+                    if (elementAllowedAt(i)) {
+                        E next = get(i);
+                        lastRet = i;
+                        cursor = i + 1;
+                        return next;
+                    } else {
+                        i++;
+                    }
                 }
+                throw new NoSuchElementException();
             } catch (IndexOutOfBoundsException e) {
                 checkForComodification();
                 throw new NoSuchElementException();
